@@ -1,10 +1,11 @@
 <template>
-  <v-app dark>
+  <v-app>
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
-      :clipped="clipped"
+      :clipped="true"
       fixed
+      light
       app
     >
       <v-list>
@@ -14,77 +15,51 @@
           :to="item.to"
           router
           exact
+          class="mb-1"
         >
           <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-img v-bind:src="item.img" width="20" />
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
+            <v-list-item-title style="color: #3c292d; font-weight: 600" v-text="item.title" />
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+
     <v-app-bar
-      :clipped-left="clipped"
+      :clipped-left="true"
       fixed
+      dense
+      elevation="2"
       app
+      color="#3c292d"
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-btn
         icon
         @click.stop="miniVariant = !miniVariant"
       >
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
+        <v-icon color="white">mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
       </v-btn>
-      <v-btn
-        icon
-        @click.stop="clipped = !clipped"
-      >
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="fixed = !fixed"
-      >
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
-      <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon>mdi-menu</v-icon>
+
+      <v-toolbar-title>
+        <v-img src="/logo.png" width="130" />
+      </v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <span style="color: white">Username</span>
+      <v-btn icon color="white">
+        <v-icon>mdi-logout-variant</v-icon>
       </v-btn>
     </v-app-bar>
-    <v-main>
+
+    <v-main style="background: #f2f2f2">
       <v-container>
         <Nuxt />
       </v-container>
     </v-main>
-    <v-navigation-drawer
-      v-model="rightDrawer"
-      :right="right"
-      temporary
-      fixed
-    >
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer
-      :absolute="!fixed"
-      app
-    >
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+
   </v-app>
 </template>
 
@@ -92,25 +67,48 @@
 export default {
   data () {
     return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
+      clipped: true,
+      drawer: true,
+      fixed: true,
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
+          img: '/icons/activity.svg',
+          title: 'My Dashboard',
+          to: '/dashboard'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+          img: '/icons/person.svg',
+          title: 'All Contacts',
+          to: '/contacts'
+        },
+        {
+          img: '/icons/rocket.svg',
+          title: 'Bookings',
+          to: '/bookings'
+        },
+        {
+          img: '/icons/company.svg',
+          title: 'Suppliers',
+          to: '/suppliers'
+        },
+        {
+          img: '/icons/plane.svg',
+          title: 'Reports',
+          to: '/reports'
+        },
+        {
+          img: '/icons/usuario.svg',
+          title: 'ERP Accounts',
+          to: '/accounts'
+        },
+        {
+          img: '/icons/show-state.svg',
+          title: 'Audit',
+          to: '/audit'
         }
       ],
       miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
+      title: 'GROWPRO'
     }
   }
 }
