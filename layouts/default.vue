@@ -48,10 +48,38 @@
 
       <v-spacer></v-spacer>
 
-      <span style="color: white">Username</span>
+      <v-menu
+        left
+        bottom
+        offset-y
+      >
+        <template v-slot:activator="{ on, attrs }">
+
+          <span
+            v-bind="attrs"
+            v-on="on"
+            style="color: white;font-size: 1rem;font-weight: lighter"
+          >
+            <v-icon color="white">mdi-menu-down</v-icon>
+
+            Username
+
+            <v-list-item-avatar width="30" height="30">
+              <img src="https://randomuser.me/api/portraits/women/81.jpg" alt=""/>
+            </v-list-item-avatar>
+          </span>
+        </template>
+
+        <v-list>
+          <v-list-item>
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+      <!-- <span style="color: white">Username</span>
       <v-btn icon color="white">
         <v-icon>mdi-logout-variant</v-icon>
-      </v-btn>
+      </v-btn> -->
     </v-app-bar>
 
     <v-main style="background: #f2f2f2">
