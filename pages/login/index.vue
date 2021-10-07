@@ -2,19 +2,21 @@
   <v-layout align-center fill-height justify-center class="grey lighten-5">
     <v-flex xs9 sm7 md5 lg3>
       <v-card elevation="10">
-        <v-card-title>
-          <v-img src="/logo-color.png" width="1000"/>
+        <v-card-title class="mb-8 px-8 py-8" style="background: #3c292d">
+          <v-img src="/logo.png" />
         </v-card-title>
+
         <v-card-text>
           <form>
             <v-text-field
               v-model="email"
               label="Email"
               hint="Write a valid email"
-              append-icon="mdi-account-outline"
               :error-messages="emailErrors"
               background-color="transparent"
               autofocus
+              outlined
+              dense
             ></v-text-field>
 
             <v-text-field
@@ -29,6 +31,8 @@
               @keyup.enter.native="submit()"
               :error-messages="passwordErrors"
               background-color="transparent"
+              outlined
+              dense
             ></v-text-field>
 
             <v-btn
@@ -36,11 +40,12 @@
               depressed
               large
               color="primary"
-              class="mt-5"
+              class="d-flex mt-2 mx-auto"
               :disabled="$v.$invalid"
               :loading="loading"
               @click="submit()"
-            >Acceder
+            >
+              Iniciar Sesi&oacute;n
             </v-btn
             >
           </form>

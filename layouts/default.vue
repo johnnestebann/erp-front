@@ -15,7 +15,7 @@
           :to="item.to"
           router
           exact
-          class="mb-1"
+          class="mb-0"
         >
           <v-list-item-action class="mr-3 ml-3">
             <v-img
@@ -51,7 +51,7 @@
       </v-btn> -->
 
       <v-toolbar-title>
-        <v-img class="ml-3" src="/logo.png" width="130" />
+        <v-img class="ml-2" src="/logo.png" width="130" />
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
@@ -70,7 +70,7 @@
           >
             <v-icon color="white">mdi-menu-down</v-icon>
 
-            Username
+            {{ $auth.user.name }}
 
             <v-list-item-avatar width="30" height="30">
               <img src="https://randomuser.me/api/portraits/women/81.jpg" alt=""/>
@@ -124,7 +124,7 @@ export default {
         },
         {
           img: '/icons/company',
-          title: 'Suppliers',
+          title: 'Providers',
           to: '/suppliers'
         },
         {
@@ -151,6 +151,9 @@ export default {
       await this.$auth.logout();
       await this.$router.push("/login");
     },
+  },
+  beforeMount() {
+    console.log(this.$auth.user.name)
   }
 }
 </script>

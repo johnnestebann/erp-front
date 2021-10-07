@@ -49,7 +49,8 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    '@nuxtjs/auth-next',
+    '@nuxtjs/proxy',
+    '@nuxtjs/auth',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
   ],
@@ -71,7 +72,7 @@ export default {
         endpoints: {
           login: {url: "/auth", method: "post", propertyName: "token"},
           logout: false,
-          user: {url: "/current", method: "get", propertyName: false}
+          user: {url: "/api/current", method: "get", propertyName: false}
         }
       }
     },
@@ -94,6 +95,7 @@ export default {
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
+    treeShake: true,
     theme: {
       light: true,
       themes: {
