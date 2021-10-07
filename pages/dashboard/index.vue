@@ -1,14 +1,14 @@
 <template>
   <div>
     <v-container>
-      <h1 style="color: #3C292D;">Dashboard</h1>
+      <h2 style="color: #3C292D;">Dashboard</h2>
     </v-container>
   </div>
 </template>
 
 <script>
 export default {
-  name: "index"
+  name: "index",
 }
 </script>
 

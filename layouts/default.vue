@@ -17,11 +17,19 @@
           exact
           class="mb-1"
         >
-          <v-list-item-action>
-            <v-img v-bind:src="item.img" width="20" />
+          <v-list-item-action class="mr-3 ml-3">
+            <v-img
+              v-bind:src="$route.path === item.to ? item.img + '-hover.svg' : item.img + '.svg'"
+              width="20"
+            />
           </v-list-item-action>
+
           <v-list-item-content>
-            <v-list-item-title style="color: #3c292d; font-weight: 600" v-text="item.title" />
+            <v-list-item-title
+              style="font-weight: 600"
+              :style="$route.path === item.to ? 'color: #FF5766' : 'color: #3C292D'"
+              v-text="item.title"
+            />
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -31,19 +39,19 @@
       :clipped-left="true"
       fixed
       dense
-      elevation="2"
+      elevation="1"
       app
       color="#3c292d"
     >
-      <v-btn
+      <!-- <v-btn
         icon
         @click.stop="miniVariant = !miniVariant"
       >
         <v-icon color="white">mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
+      </v-btn> -->
 
       <v-toolbar-title>
-        <v-img src="/logo.png" width="130" />
+        <v-img class="ml-3" src="/logo.png" width="130" />
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
@@ -72,17 +80,16 @@
 
         <v-list>
           <v-list-item>
-            <v-list-item-title>Logout</v-list-item-title>
+            <v-list-item-title style="cursor: pointer" @click="logout">Logout</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
-      <!-- <span style="color: white">Username</span>
-      <v-btn icon color="white">
-        <v-icon>mdi-logout-variant</v-icon>
-      </v-btn> -->
     </v-app-bar>
 
-    <v-main style="background: #f2f2f2">
+    <v-main
+      class="ml-0"
+      style="background: #f2f2f2"
+    >
       <v-container>
         <Nuxt />
       </v-container>
@@ -93,6 +100,7 @@
 
 <script>
 export default {
+  middleware: "auth",
   data () {
     return {
       clipped: true,
@@ -100,44 +108,49 @@ export default {
       fixed: true,
       items: [
         {
-          img: '/icons/activity.svg',
+          img: '/icons/activity',
           title: 'My Dashboard',
           to: '/dashboard'
         },
         {
-          img: '/icons/person.svg',
+          img: '/icons/person',
           title: 'All Contacts',
           to: '/contacts'
         },
         {
-          img: '/icons/rocket.svg',
+          img: '/icons/rocket',
           title: 'Bookings',
           to: '/bookings'
         },
         {
-          img: '/icons/company.svg',
+          img: '/icons/company',
           title: 'Suppliers',
           to: '/suppliers'
         },
         {
-          img: '/icons/plane.svg',
+          img: '/icons/plane',
           title: 'Reports',
           to: '/reports'
         },
         {
-          img: '/icons/usuario.svg',
+          img: '/icons/usuario',
           title: 'ERP Accounts',
           to: '/accounts'
         },
         {
-          img: '/icons/show-state.svg',
+          img: '/icons/show-state',
           title: 'Audit',
           to: '/audit'
         }
       ],
-      miniVariant: false,
-      title: 'GROWPRO'
+      miniVariant: false
     }
+  },
+  methods: {
+    async logout() {
+      await this.$auth.logout();
+      await this.$router.push("/login");
+    },
   }
 }
 </script>

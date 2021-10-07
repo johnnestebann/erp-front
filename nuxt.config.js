@@ -9,8 +9,8 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - front',
-    title: 'front',
+    titleTemplate: '%s - GrowPro',
+    title: 'ERP',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -18,7 +18,7 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }
     ]
   },
 
@@ -26,12 +26,18 @@ export default {
   css: [
   ],
 
+  loading: {
+    color: '#FF5766',
+    height: "5px"
+  },
+
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    {src: '~/plugins/vuelidate', ssr: false}
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  components: false,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
@@ -43,12 +49,40 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: 'http://localhost',
+    proxy: true
+  },
+
+  proxy: {
+    '/auth': {target: 'http://localhost', pathRewrite: {'^/auth/': ''}, changeOrigin: true},
+    '/api': {target: 'http://localhost', pathRewrite: {'^/api/': '/api/'}, changeOrigin: true},
+  },
+
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {url: "/auth", method: "post", propertyName: "token"},
+          logout: false,
+          user: {url: "/current", method: "get", propertyName: false}
+        }
+      }
+    },
+    redirect: {
+      login: "/login",
+      logout: false,
+      home: "/dashboard",
+      user: "/dashboard"
+    },
+    watchLoggedIn: true
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
