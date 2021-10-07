@@ -7,11 +7,18 @@
         <v-card-title class="d-flex">
           <h3 class="mr-auto" style="color: #3C292D;font-family: Poppins,serif">All Accounts</h3>
 
-          <v-btn class="ml-auto" right outlined color="primary">
+          <v-btn
+            class="ml-auto"
+            right
+            outlined
+            color="primary"
+            to="/accounts/new"
+          >
             <v-icon left>
               mdi-plus-circle-outline
             </v-icon>
-            New Account</v-btn>
+            New Account
+          </v-btn>
         </v-card-title>
 
         <v-divider class="mb-10" />
@@ -28,12 +35,11 @@
 <script>
 export default {
   data: () => ({
-    search: '',
     headers: [
       {text: 'Name', value: 'name'},
       {text: 'Email', value: 'email'},
     ],
-    accounts: [],
+    accounts: []
   }),
   methods: {
     async getAccounts() {

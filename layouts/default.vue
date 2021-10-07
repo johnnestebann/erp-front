@@ -22,13 +22,13 @@
               v-bind:src="$route.path === item.to ? item.img + '-hover.svg' : item.img + '.svg'"
               width="20"
             /> -->
-            <v-icon :color="$route.path === item.to ? '#FF5766' : '#3C292D'">{{ item.icon }}</v-icon>
+            <v-icon :color="$route.path.includes(item.to) ? '#FF5766' : '#3C292D'">{{ item.icon }}</v-icon>
           </v-list-item-action>
 
           <v-list-item-content>
             <v-list-item-title
               style="font-weight: 600"
-              :style="$route.path === item.to ? 'color: #FF5766' : 'color: #3C292D'"
+              :style="$route.path.includes(item.to) ? 'color: #FF5766' : 'color: #3C292D'"
               v-text="item.title"
             />
           </v-list-item-content>
@@ -153,15 +153,6 @@ export default {
       await this.$auth.logout();
       await this.$router.push("/login");
     },
-  },
-  beforeMount() {
-    console.log(this.$auth.user.name)
   }
 }
 </script>
-
-<style>
-* {
-  font-family: Poppins,serif;
-}
-</style>

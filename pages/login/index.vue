@@ -41,7 +41,7 @@
               large
               color="primary"
               class="d-flex mt-2 mx-auto"
-              :disabled="$v.$invalid"
+              :disabled="this.$v.$invalid"
               :loading="loading"
               @click="submit()"
             >
