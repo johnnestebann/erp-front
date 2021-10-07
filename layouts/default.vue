@@ -8,20 +8,21 @@
       light
       app
     >
-      <v-list>
+      <v-list class="mt-4">
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
           :to="item.to"
           router
           exact
-          class="mb-0"
+          class="mb-1"
         >
           <v-list-item-action class="mr-3 ml-3">
-            <v-img
+            <!-- <v-img
               v-bind:src="$route.path === item.to ? item.img + '-hover.svg' : item.img + '.svg'"
               width="20"
-            />
+            /> -->
+            <v-icon :color="$route.path === item.to ? '#FF5766' : '#3C292D'">{{ item.icon }}</v-icon>
           </v-list-item-action>
 
           <v-list-item-content>
@@ -109,36 +110,37 @@ export default {
       items: [
         {
           img: '/icons/activity',
+          icon: 'mdi-view-dashboard-variant-outline',
           title: 'My Dashboard',
           to: '/dashboard'
         },
         {
-          img: '/icons/person',
-          title: 'All Contacts',
-          to: '/contacts'
-        },
-        {
           img: '/icons/rocket',
+          icon: 'mdi-rocket-launch-outline',
           title: 'Bookings',
           to: '/bookings'
         },
         {
           img: '/icons/company',
+          icon: 'mdi-office-building-outline',
           title: 'Providers',
           to: '/suppliers'
         },
         {
           img: '/icons/plane',
+          icon: 'mdi-file-chart-outline',
           title: 'Reports',
           to: '/reports'
         },
         {
           img: '/icons/usuario',
+          icon: 'mdi-account-multiple-outline',
           title: 'ERP Accounts',
           to: '/accounts'
         },
         {
           img: '/icons/show-state',
+          icon: 'mdi-cog-outline',
           title: 'Audit',
           to: '/audit'
         }
@@ -157,3 +159,9 @@ export default {
   }
 }
 </script>
+
+<style>
+* {
+  font-family: Poppins,serif;
+}
+</style>

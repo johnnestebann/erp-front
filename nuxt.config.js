@@ -43,6 +43,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    'nuxt-font-loader'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -119,6 +120,12 @@ export default {
         }
       }
     }
+  },
+
+  fontLoader: {
+    url: 'https://fonts.googleapis.com/css2?family=Poppins&display=swap',
+    prefetch: true,
+    preconnect: true
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

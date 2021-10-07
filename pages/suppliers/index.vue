@@ -1,7 +1,15 @@
 <template>
   <div>
-    <v-container>
-      <h1 style="color: #3C292D;">Suppliers</h1>
+    <v-container
+      class="mt-5"
+    >
+      <v-card elevation="3">
+        <v-card-title class="d-flex">
+          <h3 class="mr-auto" style="color: #3C292D;font-family: Poppins,serif">Providers</h3>
+        </v-card-title>
+
+        <v-divider class="mb-10"/>
+      </v-card>
     </v-container>
   </div>
 </template>

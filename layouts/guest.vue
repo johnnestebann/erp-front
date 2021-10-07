@@ -9,3 +9,10 @@ export default {
   name: "guest",
 };
 </script>
+
+<style>
+* {
+  font-family: Poppins, serif;
+}
+</style>
+

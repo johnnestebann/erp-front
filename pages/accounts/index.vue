@@ -5,7 +5,7 @@
     >
       <v-card elevation="3">
         <v-card-title class="d-flex">
-          <h3 class="mr-auto" style="color: #3C292D;">All Accounts</h3>
+          <h3 class="mr-auto" style="color: #3C292D;font-family: Poppins,serif">All Accounts</h3>
 
           <v-btn class="ml-auto" right outlined color="primary">
             <v-icon left>
