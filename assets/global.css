@@ -1,3 +1,24 @@
 * {
   font-family: Poppins, serif;
 }
+
+.card-shadow {
+  box-shadow: #0000001a 0 0 13px 0 !important;
+}
+
+.color-accent {
+  color: #3C292D
+}
+
+.row-pointer > .v-data-table__wrapper > table > tbody > tr:hover {
+  cursor: pointer;
+}
+
+.row-pointer > .v-data-table__wrapper > table > tbody > tr:nth-of-type(odd) {
+  background: rgba(86, 76, 79, 0.02);
+}
+
+.row-pointer > .v-data-table__wrapper > table > thead > tr > th > span {
+  color: #3c292d;
+  font-weight: 600;
+}

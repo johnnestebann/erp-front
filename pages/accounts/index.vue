@@ -3,12 +3,12 @@
     <v-container
       class="mt-5"
     >
-      <v-card elevation="3">
+      <v-card class="card-shadow">
         <v-card-title class="d-flex">
-          <h3 class="mr-auto" style="color: #3C292D;font-family: Poppins,serif">All Accounts</h3>
+          <h3 class="mr-auto color-accent">All Accounts</h3>
 
           <v-btn
-            class="ml-auto"
+            class="ml-auto px-10"
             right
             outlined
             color="primary"
@@ -21,11 +21,13 @@
           </v-btn>
         </v-card-title>
 
-        <v-divider class="mb-10" />
+        <v-divider class="mb-10"/>
 
         <v-data-table
+          class="row-pointer"
           :headers="headers"
           :items="accounts"
+          @click:row="handleClick"
         ></v-data-table>
       </v-card>
     </v-container>
@@ -37,6 +39,7 @@ export default {
   data: () => ({
     headers: [
       {text: 'Name', value: 'name'},
+      {text: 'Lastname', value: 'lastname'},
       {text: 'Email', value: 'email'},
     ],
     accounts: []
@@ -52,7 +55,10 @@ export default {
       } catch (error) {
         console.error(error);
       }
-    }
+    },
+    async handleClick(value) {
+      await this.$router.push(`/accounts/${value.id}`);
+    },
   },
   beforeMount() {
     this.getAccounts()

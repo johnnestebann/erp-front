@@ -1,7 +1,7 @@
 <template>
   <v-layout align-center fill-height justify-center class="grey lighten-5">
     <v-flex xs9 sm7 md5 lg3>
-      <v-card elevation="10">
+      <v-card elevation="8">
         <v-card-title class="mb-8 px-8 py-8" style="background: #3c292d">
           <v-img src="/logo.png" />
         </v-card-title>

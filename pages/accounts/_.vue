@@ -8,7 +8,7 @@
           <v-btn text icon to="/accounts">
             <v-icon large>mdi-chevron-left</v-icon>
           </v-btn>
-          <h3 class="mr-auto ml-2 color-accent">New Account</h3>
+          <h3 class="mr-auto ml-2 color-accent">Account ID <small>#{{ account.id }}</small></h3>
         </v-card-title>
 
         <v-divider class="mb-10"/>
@@ -50,7 +50,7 @@
                 md="4"
               >
                 <v-text-field
-                  v-model="account.password"
+                  v-model="password"
                   label="Password"
                   type="password"
                   autocomplete="new-password"
@@ -63,9 +63,51 @@
           </v-container>
         </v-form>
 
-        <v-divider />
+        <v-divider/>
 
         <v-card-title class="d-flex">
+          <v-dialog
+            v-model="dialog"
+            persistent
+            max-width="300"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                text
+                color="primary"
+                class="mr-auto"
+                :disabled="$v.$invalid"
+                depressed
+                v-bind="attrs"
+                v-on="on"
+              >
+                Delete Account
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-text class="d-flex flex-column">
+                <v-btn @click="dialog = false" color="black" icon large right class="ml-auto">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+
+                <v-icon class="mx-auto mb-3" color="primary" x-large>mdi-alert-circle-outline</v-icon>
+
+                <h5 class="px-8 text-center font-weight-bold" style="font-size: 1rem;">Are you sure to delete this account?</h5>
+              </v-card-text>
+
+              <v-card-actions>
+                <v-btn
+                  class="d-flex mx-auto px-10 mb-4"
+                  color="primary"
+                  depressed
+                  @click="deleteAccount"
+                >
+                  Delete
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
           <v-btn
             @click="submit()"
             class="ml-auto px-10"
@@ -78,24 +120,6 @@
         </v-card-title>
       </v-card>
     </v-container>
-
-    <v-snackbar
-      v-model="snackbar.show"
-      top
-    >
-      {{ snackbar.text }}
-
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          :color="snackbar.color"
-          text
-          v-bind="attrs"
-          @click="snackbar.show = false"
-        >
-          <v-icon>mdi-close-circle</v-icon>
-        </v-btn>
-      </template>
-    </v-snackbar>
   </div>
 </template>
 
@@ -108,8 +132,7 @@ export default {
   validations: {
     account: {
       name: {required},
-      email: {required, email},
-      password: {required},
+      email: {required, email}
     }
   },
   data: () => ({
@@ -118,6 +141,8 @@ export default {
       email: '',
       password: ''
     },
+    password: '',
+    dialog: false,
     snackbar: {
       text: '',
       color: 'primary',
@@ -130,24 +155,53 @@ export default {
 
       if (!this.$v.$invalid) {
         try {
-          await this.$axios.$post("/api/users", {
+          await this.$axios.$patch(this.account['@id'], {
             name: this.account.name,
             email: this.account.email,
-            password: this.account.password
-          });
+            password: this.password !== '' ? this.password : undefined
+          }, {
+            headers: {
+              'Content-Type': 'application/ld+json'
+            }});
 
           this.snackbar.color = 'primary';
           this.snackbar.text = 'Saved successfully!';
 
-          await this.$router.push("/accounts");
         } catch (e) {
           this.snackbar.color = 'danger';
           this.snackbar.text = 'Error saving!';
         } finally {
           this.snackbar.show = true;
         }
+
+        await this.$router.push("/accounts");
       }
     },
+    async getAccount() {
+      try {
+        await this.$axios
+          .$get(`/api/users/${this.$route.params.pathMatch}`)
+          .then((response) => {
+            this.account = response;
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async deleteAccount() {
+      try {
+        await this.$axios
+          .$delete(`/api/users/${this.$route.params.pathMatch}`)
+          .then(async () => {
+            await this.$router.push("/accounts");
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  },
+  beforeMount() {
+    this.getAccount()
   }
 }
 </script>
