@@ -60,13 +60,13 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'http://localhost',
+    baseURL: 'http://core.growpro.local',
     proxy: true
   },
 
   proxy: {
-    '/auth': {target: 'http://localhost', pathRewrite: {'^/auth/': ''}, changeOrigin: true},
-    '/api': {target: 'http://localhost', pathRewrite: {'^/api/': '/api/'}, changeOrigin: true},
+    '/auth': {target: 'http://auth.growpro.local', pathRewrite: {'^/auth/': ''}, changeOrigin: true},
+    '/api': {target: 'http://core.growpro.local', pathRewrite: {'^/api/': '/api/'}, changeOrigin: true},
   },
 
   auth: {
@@ -75,7 +75,7 @@ export default {
         endpoints: {
           login: {url: "/auth", method: "post", propertyName: "token"},
           logout: false,
-          user: {url: "/api/current", method: "get", propertyName: false}
+          user: {url: "/api/users/current", method: "get", propertyName: false}
         }
       }
     },

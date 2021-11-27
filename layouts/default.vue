@@ -132,8 +132,8 @@ export default {
         },
         {
           icon: 'mdi-cog-outline',
-          title: 'Audit',
-          to: '/audit'
+          title: 'Roles',
+          to: '/roles'
         }
       ],
       miniVariant: false
