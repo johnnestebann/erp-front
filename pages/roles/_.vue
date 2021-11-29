@@ -20,7 +20,7 @@
                 cols="12"
                 md="12"
               >
-                <v-expansion-panels flat value="0">
+                <v-expansion-panels flat>
                   <v-expansion-panel>
                     <v-expansion-panel-header>
                       <h3>General</h3>
@@ -49,11 +49,16 @@
                       <h3>Actions</h3>
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
-                      <v-row>
-                        <v-col cols="12" md="4">
-                          <v-checkbox v-for="(action, i) in defaultActions" v-model="role.actions" :key="i" :value="action" :label="action"></v-checkbox>
-                        </v-col>
-                      </v-row>
+                      <div class="d-flex flex-wrap">
+                        <v-checkbox
+                          v-for="(action, i) in defaultActions"
+                          v-model="role.actions"
+                          :key="i"
+                          :value="action"
+                          :label="action"
+                          class="pa-5"
+                        ></v-checkbox>
+                      </div>
                     </v-expansion-panel-content>
                   </v-expansion-panel>
 
@@ -63,6 +68,47 @@
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
 
+                      <v-expansion-panels flat>
+                        <v-expansion-panel
+                          class="d-flex flex-column pb-2"
+                          v-for="(serializations, entity) in defaultSerializations"
+                          :key="entity"
+                        >
+                          <v-expansion-panel-header>
+                            <h4>{{ entity }}</h4>
+                          </v-expansion-panel-header>
+                          <v-expansion-panel-content>
+
+                            <v-expansion-panels flat>
+                              <v-expansion-panel
+                                class="d-flex flex-column pb-2"
+                                v-for="(permissions, action) in serializations"
+                                :key="action"
+                              >
+                                <v-expansion-panel-header>
+                                  <h4>{{ action }}</h4>
+                                </v-expansion-panel-header>
+                                <v-expansion-panel-content>
+
+                                  <div class="d-flex flex-wrap">
+                                    <v-checkbox
+                                      v-for="permission in permissions"
+                                      v-model="role.serializations[entity][action]"
+                                      :key="permission"
+                                      :value="permission"
+                                      :label="permission"
+                                      class="mx-4"
+                                    >
+                                    </v-checkbox>
+                                  </div>
+
+                                </v-expansion-panel-content>
+                              </v-expansion-panel>
+                            </v-expansion-panels>
+
+                          </v-expansion-panel-content>
+                        </v-expansion-panel>
+                      </v-expansion-panels>
                     </v-expansion-panel-content>
                   </v-expansion-panel>
                 </v-expansion-panels>
@@ -166,7 +212,8 @@ export default {
         try {
           await this.$axios.$patch(this.role['@id'], {
             name: this.role.name,
-            actions: this.role.actions
+            actions: this.role.actions,
+            serializations: this.role.serializations
           }, {
             headers: {
               'Content-Type': 'application/ld+json'
@@ -224,8 +271,6 @@ export default {
   beforeMount() {
     this.getRole()
     this.getAllowedEntities()
-
-    this.defaultActions = this.defaultActions.concat(this.role.actions)
   }
 }
 </script>
